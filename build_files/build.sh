@@ -13,24 +13,26 @@ installAstal() {(
         gtk3-devel gtk-layer-shell-devel \
         gtk4-devel gtk4-layer-shell-devel
 
-    git clone https://github.com/aylur/astal.git ~/temp
+    local dir=$(pwd)
+
+    git clone https://github.com/aylur/astal.git ./temp
 
     # Build Astal
-    cd ~/temp/lib/astal/io
+    cd ./temp/lib/astal/io
     meson setup build
     meson install -C build
 
-    cd ~/temp/lib/astal/gtk3
+    cd ./temp/lib/astal/gtk3
     meson setup build
     meson install -C build
 
-    cd ~/temp/lib/astal/gtk4
+    cd ./temp/lib/astal/gtk4
     meson setup build
     meson install -C build
 
     #Cleanup Astal Build
-    cd ~
-    rm -rf temp
+    cd $dir
+    rm -rf ./temp
 )}
 
 installAGS() {(
@@ -41,16 +43,17 @@ installAGS() {(
         gtk3-devel gtk-layer-shell-devel \
         gtk4-devel gtk4-layer-shell-devel
 
-    git clone --recurse-submodules https://github.com/aylur/ags ~/temp
+    local dir=$(pwd)
+    git clone --recurse-submodules https://github.com/aylur/ags ./temp
 
     # Build AGS
-    cd ~/temp
+    cd ./temp
     meson setup build
     meson install -C build
 
     #Cleanup AGS Build
-    cd ~
-    rm -rf temp
+    cd $dir
+    rm -rf ./temp
 )}
 
 installHyprland() {(
@@ -83,7 +86,7 @@ installStarship() {(
 ### Install packages
 dnf5 install -y tmux 
 
-installAGS
+# installAGS
 
 installHyprland
 installStarship
