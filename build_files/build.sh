@@ -66,7 +66,7 @@ installHyprland() {(
         hypridle \
         waybar \
         wofi \
-        swwww \
+        swww \
         swaync \
         stow
 )}
