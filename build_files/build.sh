@@ -76,7 +76,7 @@ installStarship() {(
         fish \
         kitty
 
-    curl -sS https://starship.rs/install.sh | sh
+    curl -sS https://starship.rs/install.sh --yes | sh
 
     # Add starship to fish
     echo "" >> ~/.bashrc
