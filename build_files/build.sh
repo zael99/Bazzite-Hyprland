@@ -58,7 +58,7 @@ installAGS() {(
 
 installHyprland() {(
     # Add Hyprland COPR
-    dnf copr enable solopasha/hyprland
+    dnf copr -y enable solopasha/hyprland
 
     # Install Dependencies
     dnf install -y \
