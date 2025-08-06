@@ -2,6 +2,8 @@
 
 set -ouex pipefail
 
+#!/bin/bash
+
 installAstal() {(
     # Install Astal
     dnf install -y \
@@ -13,26 +15,24 @@ installAstal() {(
         gtk3-devel gtk-layer-shell-devel \
         gtk4-devel gtk4-layer-shell-devel
 
-    local dir=$(pwd)
-
-    git clone https://github.com/aylur/astal.git ./temp
+    git clone https://github.com/aylur/astal.git ~/temp
 
     # Build Astal
-    cd ./temp/lib/astal/io
+    cd ~/temp/lib/astal/io
     meson setup build
     meson install -C build
 
-    cd ./temp/lib/astal/gtk3
+    cd ~/temp/lib/astal/gtk3
     meson setup build
     meson install -C build
 
-    cd ./temp/lib/astal/gtk4
+    cd ~/temp/lib/astal/gtk4
     meson setup build
     meson install -C build
 
     #Cleanup Astal Build
-    cd $dir
-    rm -rf ./temp
+    cd ~
+    rm -rf temp
 )}
 
 installAGS() {(
@@ -43,44 +43,50 @@ installAGS() {(
         gtk3-devel gtk-layer-shell-devel \
         gtk4-devel gtk4-layer-shell-devel
 
-    local dir=$(pwd)
-    git clone --recurse-submodules https://github.com/aylur/ags ./temp
+    git clone --recurse-submodules https://github.com/aylur/ags ~/temp
 
     # Build AGS
-    cd ./temp
+    cd ~/temp
     meson setup build
     meson install -C build
 
     #Cleanup AGS Build
-    cd $dir
-    rm -rf ./temp
+    cd ~
+    rm -rf temp
 )}
 
 installHyprland() {(
     # Add Hyprland COPR
     dnf copr -y enable solopasha/hyprland
 
-    # Install Dependencies
+    # Install Hyprland and Dependencies
     dnf install -y \
         hyprland \
         hypridle \
         waybar \
-        wofi \
         swww \
+        wofi \
         swaync \
         stow
 )}
 
+installZsh() {(
+    # Install Dependencies
+    dnf install -y zsh
+
+    # Install oh-my-zsh
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+)}
+
 installStarship() {(
+    # Install Dependencies
     dnf install -y \
+        zsh \
         fish \
         kitty
 
-    curl -sS https://starship.rs/install.sh --yes | sh
-
-    # Add starship to fish
-    echo "" >> ~/.bashrc
-    echo "starship init fish | source" >> ~/.bashrc
+    sh -c "$(curl -sS https://starship.rs/install.sh)" --yes
+    
 )}
 
 ### Install packages
