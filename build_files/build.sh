@@ -2,8 +2,6 @@
 
 set -ouex pipefail
 
-#!/bin/bash
-
 installAstal() {(
     # Install Astal
     dnf install -y \
