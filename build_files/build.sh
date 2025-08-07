@@ -84,9 +84,10 @@ installStarship() {(
         zsh \
         fish \
         kitty
+        
     curl -sS "https://starship.rs/install.sh" >> ./install.sh
     chmod +x ./install.sh
-    ./install.sh --yes
+    ./install.sh --yes --bin-dir=/usr/bin
     rm ./install.sh
 )}
 
