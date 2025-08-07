@@ -67,7 +67,8 @@ installHyprland() {(
 )}
 
 installStarship() {(
-    curl -sS "https://starship.rs/install.sh" >> /tmp/starship/install.sh
+    mkdir -p /tmp/starship
+    curl -sS "https://starship.rs/install.sh" > /tmp/starship/install.sh
     chmod +x /tmp/starship/install.sh
     /tmp/starship/install.sh --yes --bin-dir=/usr/bin
 )}
@@ -82,6 +83,10 @@ setupTerminal() {(
     installStarship
 )}
 
+cleanupTmp() {(
+    rm -rf /tmp/*
+)}
+
 ### Install packages
 dnf5 install -y tmux 
 
@@ -89,5 +94,6 @@ dnf5 install -y tmux
 
 installHyprland
 setupTerminal
+cleanupTmp
 
 systemctl enable podman.socket
