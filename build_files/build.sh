@@ -84,9 +84,10 @@ installStarship() {(
         zsh \
         fish \
         kitty
-
-    sh -c "$(curl -sS https://starship.rs/install.sh)" --yes
-    
+    curl -sS "https://starship.rs/install.sh" >> ./install.sh
+    chmod +x ./install.sh
+    ./install.sh --yes
+    rm ./install.sh
 )}
 
 ### Install packages
