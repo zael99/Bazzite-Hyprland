@@ -13,24 +13,23 @@ installAstal() {(
         gtk3-devel gtk-layer-shell-devel \
         gtk4-devel gtk4-layer-shell-devel
 
-    git clone https://github.com/aylur/astal.git ~/temp
+    git clone https://github.com/aylur/astal.git /tmp/astal
 
     # Build Astal
-    cd ~/temp/lib/astal/io
+    cd /tmp/astal/lib/astal/io
     meson setup build
     meson install -C build
 
-    cd ~/temp/lib/astal/gtk3
+    cd /tmp/astal/lib/astal/gtk3
     meson setup build
     meson install -C build
 
-    cd ~/temp/lib/astal/gtk4
+    cd /tmp/astal/lib/astal/gtk4
     meson setup build
     meson install -C build
 
     #Cleanup Astal Build
-    cd ~
-    rm -rf temp
+    rm -rf /tmp/*
 )}
 
 installAGS() {(
@@ -41,16 +40,15 @@ installAGS() {(
         gtk3-devel gtk-layer-shell-devel \
         gtk4-devel gtk4-layer-shell-devel
 
-    git clone --recurse-submodules https://github.com/aylur/ags ~/temp
+    git clone --recurse-submodules https://github.com/aylur/ags /tmp/ags
 
     # Build AGS
-    cd ~/temp
+    cd /tmp/ags
     meson setup build
     meson install -C build
 
     #Cleanup AGS Build
-    cd ~
-    rm -rf temp
+    rm -rf /tmp/*
 )}
 
 installHyprland() {(
@@ -68,25 +66,20 @@ installHyprland() {(
         stow
 )}
 
-installZsh() {(
-    # Install Dependencies
-    dnf install -y zsh
-
-    # Install oh-my-zsh
-    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+installStarship() {(
+    curl -sS "https://starship.rs/install.sh" >> /tmp/starship/install.sh
+    chmod +x /tmp/starship/install.sh
+    /tmp/starship/install.sh --yes --bin-dir=/usr/bin
 )}
 
-installStarship() {(
+setupTerminal() {(
     # Install Dependencies
     dnf install -y \
         zsh \
         fish \
         kitty
-        
-    curl -sS "https://starship.rs/install.sh" >> ./install.sh
-    chmod +x ./install.sh
-    ./install.sh --yes --bin-dir=/usr/bin
-    rm ./install.sh
+
+    installStarship
 )}
 
 ### Install packages
@@ -95,6 +88,6 @@ dnf5 install -y tmux
 # installAGS
 
 installHyprland
-installStarship
+setupTerminal
 
 systemctl enable podman.socket
